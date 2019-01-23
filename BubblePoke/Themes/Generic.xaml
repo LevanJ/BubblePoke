@@ -1,0 +1,63 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:BubblePoke">
+
+    <ControlTemplate x:Key="buttonTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{Binding Path=CornerRadius, RelativeSource={RelativeSource AncestorType={x:Type local:RoundButton}}}"
+                        BorderThickness="{Binding Path=BorderThickness, RelativeSource={RelativeSource AncestorType={x:Type local:RoundButton}}}"
+                    />
+            <ContentPresenter Content="{TemplateBinding Content}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Margin="{TemplateBinding Padding}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Grid>
+    </ControlTemplate>
+    <Style x:Key="RoundButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template" Value="{StaticResource buttonTemplate}"/>
+        <Setter Property="Typography.Capitals" Value="SmallCaps"/>
+        <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type local:RoundButton}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Path=BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:RoundButton}}}"/>
+
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="20"
+                              Direction="270"
+                              Color="Gray"/>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{Binding Path=MouseOverBackground, RelativeSource={RelativeSource AncestorType={x:Type local:RoundButton}}}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{Binding Path=PressedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:RoundButton}}}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style TargetType="{x:Type local:RoundButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:RoundButton}">
+                    <Grid>
+                        <Button x:Name="TheButton" Content="{TemplateBinding Content}"
+                                Style="{StaticResource RoundButtonStyle}"
+                               />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+
